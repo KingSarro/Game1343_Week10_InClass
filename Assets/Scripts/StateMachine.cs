@@ -5,18 +5,24 @@ using UnityEngine;
 public class StateMachine{
     State currState;
     
-    public void ChangeState(State newState){
-        currState.ExitState();
-        currState = newState;
-        currState. EnterState();
+    StateMachine(State initialState){
+        currState = initialState;
     }
 
-    private void Update(){
-        currState.UpdateState();
+    public void ChangeState(State newState){
+        currState?.ExitState();
+        currState = newState;
+        currState?.EnterState();
+    }
+
+    public void Update(){ // Will not update on its own because it is not a monobehavior
+        currState?.UpdateState();
     }
 }
 
-public class State{ //Could also make the whole class abstract if wanted
+public class State{ //Could also make the whole class abstract if wanted //Could also be an interface
+    protected StateMachine machine; //Protected so the children can inhereit it
+    //public State
     public virtual void EnterState(){
 
     }
